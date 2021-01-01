@@ -1,0 +1,79 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	font-family: ui-monospace;
+}
+
+main {
+	flex: 1 0 auto;
+}
+nav ul.right a:hover{
+	background-color: grey;
+	color: black;
+}
+.sofia{
+	font-family: 'Sofia', cursive;
+}
+.cursive{
+    font-family: cursive;   
+}
+#index h1{
+	font-size: 15vh;
+}
+#index a:hover{
+	text-decoration: underline;
+}
+
+#profile {
+	margin-top: 5%;
+}
+
+
+#detail{
+	margin-top: 5%;
+}
+
+#detail .author{
+	font-size: 1.5rem;
+	font-weight: bold;
+
+}
+
+.comment {
+	border-bottom: 1px;
+	border-bottom-style: solid;
+	padding: 5px;
+}
+.comment img{
+	margin-right: 20px;
+}
+.comment a.modal-trigger{
+	position: relative;
+	margin-right: 25px;
+	margin-left: 10px;
+}
+.comment a.modal-trigger i{
+	position: absolute;
+}
+#edit_delete {
+	float: right;
+}
+#edit_delete a{
+	margin-bottom: 5px;
+} 
+@media only screen and (max-width: 600px){
+	#edit_delete {
+		margin-top: 20px;
+		float: left;
+	}
+	#edit_delete a {
+		margin-right: 5px;
+	}
+	#email_profile{
+		font-size: 2rem;
+	}
+	#scroll_id_content{
+		overflow-x: scroll;
+	}
+}

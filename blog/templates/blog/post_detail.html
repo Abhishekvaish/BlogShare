@@ -1,0 +1,80 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block background %}
+	<style>
+		body{
+			background-color: #3331;
+		}
+
+	</style>
+{% endblock %}
+
+{% block body %}
+<div id="detail" class="container">
+	<div class="card-panel">
+		<br>
+		<a href="{% url 'blog:user_post' pk=post.author.pk %}">
+			<img src="{{post.author.img.url}}" class="circle" align="left" style="margin-right: 2vw;" width="150" height="150px" >	
+		</a>
+		<h3 style="margin-top: 0">{{post.title|capfirst}}</h3>
+		<div class="right-align">
+			<p class="author">{{post.author.first_name|title}} {{post.author.last_name|title}} &nbsp;&nbsp;
+			</p>
+			<p>{{post.created_on}} &nbsp;&nbsp;</p>	
+		</div>
+		<p>{{post.content|safe}}</p>
+		{% with post.tags|split:"," as tags %}
+			{% for tag in tags %}
+				<div class="chip">
+					{{tag}}
+				</div>
+			{% endfor %}
+		{% endwith  %}
+		<br><br>
+		{% if user.is_authenticated %}
+			<i class="fas fa-heart small" v-if="liked" v-on:click="toggle_like">&nbsp;[[ like_count ]]</i>
+			<i class="far fa-heart small" v-else v-on:click="toggle_like">&nbsp;[[ like_count ]]</i>
+		{% else %}
+			<i class="fas fa-heart small"> [[ like_count ]]</i>
+		{% endif %}
+		<br><br>
+
+		<h4 class="sofia">Comments</h4>
+		{% if user.is_authenticated %}
+			<div class="input-field">
+				<textarea name="comment" class="materialize-textarea" v-model="comment" style="border:1px solid;padding: 10px;border-radius: 10px;">
+				</textarea>
+				<button v-on:click="addComment" class="btn blue">Post</button>
+			</div>
+		{% endif %}
+		<br>
+		<hr>
+		<div class="comment" v-for="comment in comments">
+			<a :href="'/user/' +comment.author_pk ">
+				<img width="60" height="60" :src="[[comment.author_img]]" class="circle" align="left">
+			</a>
+			[[comment.text]]
+			<p class="right-align">
+				<b>[[comment.author_name]]</b>
+			-
+			[[new Date(comment.time).toDateString()]]
+			<a class="modal-trigger black-text" href="#modal_delete_comment"><i class="material-icons" v-if="comment.author_same_as_user" v-on:click="delete_comment_index=comment.pk" >delete</i></a>
+			</p>
+
+		</div>
+	</div>
+	<div id="modal_delete_comment" class="modal">
+		<div class="modal-content">
+		<h4>Delete Comment</h4>
+		<p>Are you sure you want to delete this comment, this action cannot be undone</p>
+		</div>
+		<div class="modal-footer">
+			<a class="blue white-text modal-close btn-flat">Cancel</a>
+			<button  class="red modal-close waves-effect waves-white white-text btn-flat"  v-on:click="delete_comment()">Delete</button>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

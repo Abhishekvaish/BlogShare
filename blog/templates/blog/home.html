@@ -1,0 +1,86 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block background %}
+	<style>
+		body{
+			background-color: #3331;
+		}
+
+	</style>
+{% endblock %}
+
+{% block body %}
+<div id="home" class="container">
+	<br><br>
+	{% for post in post_list %}
+	<div class="card-panel hoverable">
+		<div class="row">
+			<div class="col l3 m4 s12 center valign-wrapper" >
+				<a href="{% url 'blog:user_post' pk=post.author.pk %}">
+					<img src="{{post.author.img.url}}" class="circle responsive-img" >					
+				</a>
+			</div>
+			<div class="col l9 m8 s12">
+				<h4>{{post.title|capfirst}}</h4>
+				<p><b>{{post.author.first_name | title}} {{post.author.last_name | title}}</b>
+					<br>
+					{{post.created_on}}
+				</p>
+				{% with post.tags|split:"," as tags %}
+					{% for tag in tags %}
+						<div class="chip">
+							{{tag}}
+						</div>
+					{% endfor %}
+				{% endwith  %}
+				<br><br>
+				<a href="{% url 'blog:detail' pk=post.pk title=post.title|url_format %}">Read More</a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+<div class="fixed-action-btn">
+	<a href="{% url 'blog:new_post' %}" class="btn-floating btn-large black tooltipped" data-position="left" data-tooltip="new post">
+		<i class="large material-icons">mode_edit</i>
+	</a>
+</div>
+
+
+{% if is_paginated %}
+<div class="center">
+	<br><br>
+	<ul class="pagination ">
+		{% if page_obj.has_previous %}
+			<li class="transparent ">
+				<a href="?page={{page_obj.previous_page_number}}" class="circle white black-text">
+					&lsaquo;
+				</a>
+			</li>
+		{% endif %}
+		{% for num in page_obj.paginator.page_range %}
+			{% if page_obj.number == num %}
+				<li class="active transparent">
+					<a href="?page={{num}}" class="circle black white-text">{{num}}</a>
+				</li>
+			{% else %}
+				<li class=" transparent black-text">
+					<a href="?page={{num}}" class="circle white">{{num}}</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+			{% if page_obj.has_next %}
+			<li class="transparent ">
+				<a href="?page={{page_obj.next_page_number}}" class="circle white black-text">
+					&rsaquo;
+				</a>
+			</li>
+		{% endif %}
+	</ul>
+	<br><br>
+</div>
+{% endif %}
+
+{% endblock %}

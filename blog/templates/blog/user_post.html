@@ -1,0 +1,62 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block background %}
+	<style>
+		body{
+			background-color: #3331;
+		}
+
+	</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<br><br>
+	<div class="card-panel">
+		<img src="{{img_url}}" class="circle" align="left" style="margin-right: 2vw;">
+		<h3>{{user.first_name|title}} {{user.last_name|title}}</h3> 
+		<p class="blue-text sofia">{{user.email}}</p>
+		<p>Total post written : {{posts.count}} </p>
+		<div class="clearfix"><br></div>
+
+		<ul class="collapsible">
+		{% for post in posts %}
+			<li>
+				<div class="collapsible-header blue lighten-4">
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					{{post.title|capfirst}}
+				</div>
+				<div class="collapsible-body">
+					<span class="truncate">
+					{{post.content|safe}}<br>
+					<b>{{post.created_on|date:'M d, Y'}}</b><br><br>
+					<a href="{% url 'blog:detail' pk=post.pk title=post.title|url_format %}"  class="btn blue waves-effect">Read More</a>
+					{% if owner  %}
+					<div id="edit_delete" >
+						<a class="btn white black-text " href="{% url 'blog:update' pk=post.pk title=post.title  %} ">
+						Edit
+						</a>
+						<a class="btn red modal-trigger" href="#modal_delete" data-title = "{{post.title}}" onclick="getIndex({{post.pk}})" >Delete </a>
+					</div>
+					{% endif %}
+					</span>
+				</div>
+			</li>	
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+<div id="modal_delete" class="modal">
+	<div class="modal-content">
+	<h4>Delete Post</h4>
+	<p>Are you sure you want to delete this post, this action cannot be undone</p>
+	</div>
+	<div class="modal-footer">
+	<form onclick="getIndex()">
+		<a class="blue white-text modal-close btn-flat">Cancel</a>
+		<button type="submit" class="red modal-close waves-effect waves-white white-text btn-flat" >Delete</button>
+	</form>
+	</div>
+</div>
+
+{% endblock %}

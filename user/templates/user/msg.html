@@ -1,0 +1,27 @@
+{% extends 'user/base.html' %}
+
+{% block body %}
+<br><br><br>
+<div class="row">
+	<div class="col l6 offset-l3 m8 offset-m2 s12 ">
+		<div class="card-panel ">
+			{% if confirmation %}
+				<h3 class="sofia center-align">
+					Please confirm your email address to complete the registration
+				</h3>
+				<p class="center-align">
+					A mail with an activation link has been sent to {{email}} 
+					<br>If you don't receive an email, please make sure you've entered the correct email address you registered with, and check your spam folder.
+			  </p>
+			{% elif invalid %}
+				<h3 class="center-align red-text">Error</h3>
+				<h3 class="sofia center-align">
+
+					Activation link is invalid!
+				</h3>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

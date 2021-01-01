@@ -1,0 +1,50 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block background %}
+	<style>
+		body{
+			background-color: #3331;
+		}
+
+	</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<br><br>
+	<div class="card-panel">
+		<h3 class="center-align sofia">New Post</h3><br>
+		<form  onsubmit="return tranform_chip()" id="post_create" method="post" >
+			{% csrf_token %}
+			{{form.media}}
+			{% for field in form %}
+				{% if field.auto_id == 'id_title' %}
+					<h5>{{field.label}}</h5>
+					{{field}}
+				{% elif field.auto_id == 'id_content' %}
+					<h5>{{field.label}}</h5>
+						<div id="scroll_id_content">
+						{{field}}
+						</div>
+				{% elif field.auto_id == 'id_tags'  %}
+					<h5>{{field.label}}</h5>
+					 <div class="chips">
+					 	<input name="tags" id="id_tags">
+					 </div>
+					 <p class="grey-text">add a tag and press enter to add more than one tag</p>
+					 <p id="notags" class="red-text"></p>
+				{% endif %}
+				{% for error in field.errors %}
+                  <p class="red-text">{{ error }}</p>
+                {% endfor %}
+			{% endfor %}
+				
+			<div class="center">
+				<br><button type="submit" class="btn blue">Post</button>
+				<br><br>
+			</div>
+		</form>
+	</div>
+
+</div>
+{% endblock %}

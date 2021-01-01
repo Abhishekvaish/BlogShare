@@ -1,0 +1,38 @@
+{% extends 'user/base.html' %}
+
+{% block body %}
+<br><br>
+<div class="row">
+	<div class="col l6 offset-l3 m8 offset-m2 s12 ">
+		<div class="card-panel">
+			<h3 class="center-align sofia ">Sign In</h3>
+			<form action="" method="post">
+				{% csrf_token %}
+				{% if form.non_field_errors %}
+					    {% for err in form.non_field_errors %}
+					      <p class="red-text">{{ err }}</p>
+					    {% endfor %}
+					{% endif %}
+				<br>
+				{% for field in form %}
+					<div class="input-field ">
+					{{field}}
+					<label for="{{field.auto_id}}">{{field.label}}</label>
+					</div>
+				{% endfor %}
+				<a href="{% url 'password_reset' %}" class="blue-text">forgot password? Reset now</a>
+				<div class="center">
+					<br>
+					<button type="submit" name="submit" class="btn blue">Log In</button>
+					<br>
+				</div>
+			</form>
+			<br>
+			<br>
+			<a href="{% url 'register' %}" class="blue-text" >new to BlogShare? Register here</a>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block body %}
+<div id="index">
+	<h1 class="sofia center-align white-text">
+	Read, write and share awesome Blogs
+	</h1><br>
+	{% if not user.is_authenticated %}
+		<h5 class="sofia white-text center-align">
+		<a href="{% url 'login'  %}" class="white-text">SignIn</a> / <a href="{% url 'register' %}" class="white-text">SignUp</a>
+		</h5>
+		{% endif %}
+	<br><br>
+</div>
+
+
+
+{% endblock %}

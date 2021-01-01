@@ -1,0 +1,13 @@
+<h3>Hi {{ user.first_name }} {{user.last_name}}, </h3>
+<br>
+Please click on the link to activate your BlogShare account <br>
+{% autoescape off %}
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}
+The above link will expire in 10 minutes
+<h3>
+Your Sincerly,<br>
+Development Team<br>
+BlogShare
+</h3>
+

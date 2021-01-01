@@ -1,0 +1,55 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block background %}
+	<style>
+		body{
+			background-color: #3331;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+<div id="profile" class="container">
+	<div class="card-panel">
+		<div class="row">
+			<div class="col l4 image-container">
+				<img src="{{user.img.url}}" class="circle">
+			</div>
+			<div class="col l8">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}	
+					{% for field in form %}
+					{% if field.auto_id == "id_first_name" or field.auto_id == "id_last_name" %}
+						<div class="input-field">
+							{{ field }}
+							{{field.label_tag}}
+						</div>
+						<p class="red-text">
+						{% for error in field.errors %}
+							{{ error }}<br>
+						{% endfor %}
+						</p>
+					{% endif %}
+
+					{% if field.auto_id == "id_img" %}
+						{{field}}
+						<p class="red-text">
+						{% for error in field.errors %}
+							{{ error }}<br>
+						{% endfor %}
+						</p>
+					{% endif %}
+					{% endfor %}
+					<div class="right">
+						<br>
+						<button class="btn waves-effect large blue" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<h3 id="email_profile" class="sofia center-align">{{user.email}}</h3> 
+</div>
+
+
+{% endblock %}
