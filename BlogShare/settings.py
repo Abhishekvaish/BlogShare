@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 	'django_cleanup.apps.CleanupConfig',
 	'ckeditor',
 	'background_task',
+	'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -129,9 +130,17 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'user.User'
 
 # look for files in /media/ directory
-MEDIA_ROOT = os.path.join(BASE_DIR,"media_folder")
 MEDIA_URL = '/media/'
 
+if not DEBUG:
+	DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+	CLOUDINARY_STORAGE = {
+		'CLOUD_NAME': os.environ.get("CLOUD_NAME") ,
+		'API_KEY': os.environ.get("API_KEY") ,
+		'API_SECRET': os.environ.get("API_SECRET")
+	}
+else :
+	MEDIA_ROOT = os.path.join(BASE_DIR,"media_folder")
 
 
 #login redirect

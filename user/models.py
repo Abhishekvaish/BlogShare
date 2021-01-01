@@ -45,7 +45,7 @@ class User(AbstractBaseUser):
 	email = models.EmailField(verbose_name='email',max_length=60,unique=True)
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	img = models.ImageField(default='default.jpg')
+	img = models.ImageField(upload_to='images/',default='images/default.jpg')
 
 
 	# these are compulsory fields
@@ -78,10 +78,10 @@ class User(AbstractBaseUser):
 		return True
 
 	# overwriting custom save to resize image
-	def save(self,*args,**kwargs):
-		super(User,self).save(*args,**kwargs)
-		img_reshaped = Image.open(self.img.path)
-		#if img_reshaped.height > 225 or img_reshaped.width > 225:
-		img_reshaped =  img_reshaped.resize((225,225))
-		img_reshaped.save(self.img.path)
+	# def save(self,*args,**kwargs):
+	# 	super(User,self).save(*args,**kwargs)
+	# 	img_reshaped = Image.open(self.img.url)
+	# 	#if img_reshaped.height > 225 or img_reshaped.width > 225:
+	# 	img_reshaped =  img_reshaped.resize((225,225))
+	# 	img_reshaped.save(self.img.path)
 
