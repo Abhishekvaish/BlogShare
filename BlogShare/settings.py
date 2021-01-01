@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'user.User'
 
 # look for files in /media/ directory
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_ROOT = os.path.join(BASE_DIR,"media_folder")
 MEDIA_URL = '/media/'
 
 
