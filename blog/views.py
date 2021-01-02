@@ -119,7 +119,7 @@ def user_post(request,pk):
 	context  = {
 		'posts':Post.objects.filter(author=user),
 		'owner':False,
-		'img_url':user.img.url
+		'author':user
 	}
 	if request.user.is_authenticated and request.user == user :
 		context['owner']=True
