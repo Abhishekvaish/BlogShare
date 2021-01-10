@@ -8,4 +8,4 @@ email - test.user@gmail.com
 
 password - 4a0ff839c325f6b3c44e
 
-<img src="media_folder/home.png">
+<img src="media_folder/home.PNG">
